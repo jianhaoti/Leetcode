@@ -1,9 +1,14 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         n = len(numbers)
-        for indexSlow in range(0, n):
-            indexFast = indexSlow + 1
-            while (indexFast < n and numbers[indexSlow] + numbers[indexFast] <= target):
-                if numbers[indexSlow] + numbers[indexFast] == target:
-                    return [indexSlow + 1, indexFast + 1]
-                indexFast += 1
+        leftPointer = 0
+        rightPointer = n-1
+
+        while leftPointer <= rightPointer:
+            sum = numbers[leftPointer] + numbers[rightPointer]
+            if sum < target:
+                leftPointer +=1
+            elif sum > target:
+                rightPointer-=1
+            else:
+                return [leftPointer+1, rightPointer+1]

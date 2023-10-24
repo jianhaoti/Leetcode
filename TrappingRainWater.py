@@ -1,5 +1,11 @@
 class Solution(object):
     def trap(self, height):
+        #I'm keeping this for learnings sake, but I have a v2. This algoirthm is slow
+        #since it's O(nh) where n is size of input array and h is max height
+        #this speed is based on a "horizontal then vertical" idea as in tetris
+        #the faster algorithm will go from "pole ot pole" and will be O(n)
+        
+        #### #### ####
         #the idea is "tetris". work from bottom to top
         #at each level, from leftmost nonzero to rightmost nonzero, count number of zeros
         #add number of zeros to total rainwater
@@ -43,4 +49,3 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        

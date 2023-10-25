@@ -2,14 +2,11 @@ class Solution:
     def kthGrammar(self, n: int, k: int) -> int:
         # row n has 2^(n-1) elements, so don't build the thing
         # only k matters, think of n = infinity by monotonicity
-        # replace k with 0-indexing, so k = k-1
-
-        k = k - 1
-        # 0 1 10 1001 100|1|0110
+        # 0 1 1|0|  1001 100|1|0110
         # find posts (0-indexing): 2^0 = 1, 2^1 = 2, 2^2 = 4, 2^3 = 8
         # just need to count parity of k ----> 0
 
-        # EXAMPLE:
+        # EX:
         # suppose k = k_0 = 11, and closest start is 2^3 = 8, so distance 3.
         # then, replace this with k_1 = 3
         # nearest post is 2^1 = 2, so distance is 1
@@ -19,9 +16,11 @@ class Solution:
         # stop condition is when you hit 0, then check parity of i in k_i
 
         parity = True
-        while k != 0:
-            k = k - self.nearestPost(k)
+        while k > 1:
             parity = not parity
+            k = k - self.nearestPost(k)+1
+            #print("New k value is " + str(k))
+
 
         if parity:
             return 0
@@ -31,6 +30,12 @@ class Solution:
     def nearestPost(self, k: int) -> int:
         n = -k
         count = 0
-        while n + pow(2, count) < 0: # if k = 3, return 2^1 = 2
+        #print("k = " +str(k))
+        while n + pow(2, count)+1 <= 0: # EX: if k = 3, then return 2^1 = 2
+            #print("Post at index: " + str(pow(2,count)+1))
+            #print("Distance from k: " + str(n+pow(2,count)+1))
             count += 1
-        return pow(2, count)
+        count-=1 #overcounted in while loop by one
+
+        print("The nearest post for k = " + str(k) + " is at index: "+ str(pow(2,count)+1))
+        return pow(2, count)+1

@@ -21,7 +21,7 @@ class Solution(object):
             right = left+1
             rightHeight = height[right]
 
-            while rightHeight <= leftHeight: #find the next guy who is as tall
+            while rightHeight < leftHeight: #find the next guy who is as tall
                 totalStones+=rightHeight
                 right+=1
 

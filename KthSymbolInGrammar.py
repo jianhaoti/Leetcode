@@ -1,3 +1,4 @@
+#1-indexing used!
 class Solution:
     def kthGrammar(self, n: int, k: int) -> int:
         parity = True

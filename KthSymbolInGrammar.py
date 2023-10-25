@@ -39,3 +39,6 @@ class Solution:
 
         print("The nearest post for k = " + str(k) + " is at index: "+ str(pow(2,count)+1))
         return pow(2, count)+1
+
+#I ran this code once and I got ~top 20%. I ran it exactly the same again I got ~top 80%.
+#So don't trust the runtime so much. Either way, this is a O(log k) solution.

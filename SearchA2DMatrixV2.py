@@ -9,9 +9,15 @@ class Solution:
         while left[0] <= right[0] and left[1] <= right[1]:
             middle = ((left[0]+left[0])//2, (right[1]+right[1])//2)
             if matrix[middle[0]][middle[1]] > target:
-                right = (middle[0], middle[1] - 1)
+                if middle[1] != 0: #not frist element in row
+                    right = (middle[0], middle[1] - 1)
+                else:
+                    right = (middle[0]-1, len(matrix[0]))
             elif matrix[middle[0]][middle[1]] < target:
-                left = (middle[0], middle[1] + 1)
+                if middle[1] != len(matrix[0]) - 1: #not last element in row
+                    left = (middle[0], middle[1] + 1)
+                else:
+                    left = (middle[0]+1, 0)
             else:
                 return True
         return False

@@ -33,16 +33,16 @@ class Solution:
 
             if nums1[right1] == maxValue:
                 nums1.append(maxValue + 1)
-                lowerMedian = self.findMedianSortedArrays(nums1, nums2)
-                upperMedian = lowerMedian + 1
+                upperMedian = self.findMedianSortedArrays(nums1, nums2)
+                lowerMedian = lowerMedian - 1
 
                 nums1.pop()
                 return (nums1[lowerMedian] + nums1[upperMedian])/2
 
             else: # even in the case maxValue are in both arrays, you only want to run this on one of them
                 nums2.append(maxValue + 1)
-                lowerMedian = self.findMedianSortedArrays(nums1, nums2)
-                upperMedian = lowerMedian + 1
+                upperMedian = self.findMedianSortedArrays(nums1, nums2)
+                lowerMedian = upperMedian - 1
 
                 nums2.pop()
                 return (nums2[lowerMedian] + nums2[upperMedian])/2
@@ -65,14 +65,14 @@ class Solution:
             if len1 % 2 == 0:
                 lowerMid = (len1 - 2)//2
                 upperMid = lowerMid + 1
-                mid1 = (nums1[lowerMid] + nums1[uppermid])/2
+                mid1 = (nums1[lowerMid] + nums1[upperMid])/2
             else:
                 mid1 = nums1[(len1 - 1)//2]
 
             if len2 % 2 == 0:
                 lowerMid = (len2 - 2)//2
                 upperMid = lowerMid + 1
-                mid2 = (nums2[lowerMid] + nums2[uppermid])/2
+                mid2 = (nums2[lowerMid] + nums2[upperMid])/2
             else:
                 mid2 = nums2[(len1 - 1)//2]
 
@@ -87,8 +87,8 @@ class Solution:
                 else:
                     self.findMedianSortedArrays(nums1[:mid1], nums2[mid2:])
             elif mid1 < mid2:
-
-            else:
+                return 1
+            elif mid1 == mid2:
                 return mid1
 
 

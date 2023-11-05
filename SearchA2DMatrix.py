@@ -1,4 +1,5 @@
-#slow since O(m+log n)
+# slow since O(m+log n)
+# v2 is faster
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         rowCounter = 0
@@ -22,4 +23,5 @@ class Solution:
                 left = middle + 1
             else:
                 return True
+                print("test")
         return False

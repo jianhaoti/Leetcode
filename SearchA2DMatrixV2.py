@@ -7,17 +7,12 @@ class Solution:
             maxValue = max(element, maxValue)
 
         left, right = 0, maxValue
-        print("Search space from", left, "to", right)
-
         while left < right:
             mid = (left + right)//2
-            print("Mid:", mid)
             if self.fastEnough(piles, h, mid):
                 right = mid - 1
-                print("Search space from", left, "to -", right, "-")
             else:
                 left = mid + 1
-                print("Search space from -", left, "- to", right)
         if self.fastEnough(piles, h, right):
             return right
         return right+1
@@ -30,7 +25,6 @@ class Solution:
                     element = element - element%k + k
                 time += element/k
 
-            print("Total time is:", time)
             return time <= h
         return False
 

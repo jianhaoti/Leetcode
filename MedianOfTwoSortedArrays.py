@@ -102,8 +102,8 @@ class Solution:
             len1 = right1 - left1 + 1
             len2 = right2 - left2 + 1
 
-            while len1 > 2 or len2 > 2:
-                #find the two mid values to compare. even/odd separation
+            if len1 > 2 or len2 > 2:
+                # find the two mid values to compare. even/odd separation
                 if len1 % 2 == 0:
                     upperMid1 = left1 + len1//2
                     lowerMid1 = upperMid1 - 1
@@ -124,7 +124,7 @@ class Solution:
 
                 print("midValue1:", mid1Value, "midValue2:", mid2Value)
 
-                #compare two values and continue search
+                # compare two values and continue search
                 if mid1Value > mid2Value:
                     if len1 % 2 == 0 and len2 % 2 == 0: # E E
                         right1 = lowerMid1
@@ -139,6 +139,7 @@ class Solution:
 
                         len1 = right1 - left1 + 1
                         len2 = right2 - left2 + 1
+                        print("Len1:", len1, "Len2", len2)
 
                     elif len1 % 2 == 0 and len2 % 2 != 0: # E O
                         right1 = lowerMid1
@@ -153,7 +154,7 @@ class Solution:
 
                         len1 = right1 - left1 + 1
                         len2 = right2 - left2 + 1
-                    print("Right1:", right1, "Left2:", left2)
+                    print("Left1:", left1, "Right1:", right1, "Left2:", left2, "Right2", right2)
 
                 if mid1Value < mid2Value:
                     if len1 % 2 == 0 and len2 % 2 == 0: # E E
@@ -183,21 +184,27 @@ class Solution:
 
                         len1 = right1 - left1 + 1
                         len2 = right2 - left2 + 1
-                    print("Left1:", left1, "Right2:", right2)
 
-                else: #if we've found median early
+                else: # if we've found median early
                     return mid1Value
+
             # now in base cases: 1+1, 1+2, 2+1, 2+2
+            print("BASE CASE STARTS HERE")
             if len1 == 1 and len2 == 1:
                 return (nums1[left1] + nums2[left2])/2
+
             elif len1 == 1 and len2 == 2:
                 arr = [nums1[left1], nums2[left2], nums2[right2]]
+                print(arr)
                 arr = sorted(arr)
                 return arr[1]
+
             elif len1 == 2 and len2 == 1:
                 arr = [nums2[left2], nums1[left1], nums1[right1]]
+                print(arr)
                 arr = sorted(arr)
                 return arr[1]
+
             elif len1 == 2 and len2 == 2:
                 arr = [nums2[left2], nums2[right2], nums1[left1], nums1[right1]]
                 arr = sorted(arr)

@@ -33,27 +33,29 @@ class Solution:
 
             if nums1[right1] == maxValue:
                 nums1.append(maxValue + 1)
+                print("Nums1:", nums1)
                 lowerMedianValue = self.handleOdd(nums1, nums2)
-                print("LowerMedianValue for nums1:", lowerMedianValue)
+                print("LowerMedianValue after changing nums1:", lowerMedianValue, "\n")
 
                 nums1.pop() # pop out maxValue + 1
                 nums1.pop() # pop out maxValue
+                print("Nums1:", nums1)
                 upperMedianValue = self.handleOdd(nums1, nums2)
-                print("UpperMedianValue for nums1:", upperMedianValue)
+                print("UpperMedianValue after changing nums1:", upperMedianValue, "\n")
 
                 return (lowerMedianValue + upperMedianValue)/2
 
             else:
-                print("Before appending:", nums2)
                 nums2.append(maxValue + 1)
-                print("After appending:", nums2)
+                print(nums2)
                 lowerMedianValue = self.handleOdd(nums1, nums2)
-                print("LowerMedianValue for nums2:", lowerMedianValue)
+                print("LowerMedianValue after changing nums2:", lowerMedianValue, "\n")
 
                 nums2.pop() # pop out maxValue + 1
                 nums2.pop() # pop out maxValue
+                print(nums2)
                 upperMedianValue = self.handleOdd(nums1, nums2)
-                print("UpperMedianValue for nums2:", upperMedianValue)
+                print("UpperMedianValue after changing nums2:", upperMedianValue, "\n")
 
                 return (lowerMedianValue + upperMedianValue)/2
 
@@ -72,81 +74,139 @@ class Solution:
     # DON'T WRITE AS A RECURSIVE ALGO. CANNOT PRESERVE SUM = ODD!
 
     def handleOdd(self, nums1, nums2) -> int:
-        left1, left2, right1, right2 = 0, 0, len(nums1) - 1, len(nums2) - 1
-        len1 = right1 - left1 + 1
-        len2 = right2 - left2 + 1
+        # deal with case that either is empty (e.g. when dealing with even case). won't get both empty
+        if not nums1:
+            len2 = len(nums2)
 
-        while (len1 != 1 and len2 == 2) or (len2 != 1 and len1 == 2):
-            #find the two mid values to compare. even/odd separation
+            if len2 % 2 == 0:
+                lowerMedian = (len2 - 2)//2
+                upperMedian = len2//2
+                return (nums2[lowerMedian] + nums2[upperMedian])/2
+
+            else:
+                return nums2[(len2 - 1)//2]
+
+        elif not nums2:
+            len1 = len(nums1)
+
+            if len1 % 2 == 0:
+                lowerMedian = (len1 - 2)//2
+                upperMedian = len1//2
+                return (nums1[lowerMedian] + nums1[upperMedian])/2
+
+            else:
+                return nums1[(len1 - 1)//2]
+
+        else:
+            left1, left2, right1, right2 = 0, 0, len(nums1) - 1, len(nums2) - 1
             len1 = right1 - left1 + 1
             len2 = right2 - left2 + 1
 
-            if len1 % 2 == 0:
-                upperMid1 = len1//2
-                lowerMid1 = upperMid1 - 1
-                mid1Value = (nums1[lowerMid1] + nums1[upperMid1])/2
+            while len1 > 2 or len2 > 2:
+                #find the two mid values to compare. even/odd separation
+                if len1 % 2 == 0:
+                    upperMid1 = left1 + len1//2
+                    lowerMid1 = upperMid1 - 1
+                    mid1Value = (nums1[lowerMid1] + nums1[upperMid1])/2
 
-            else:
-                mid1 = (len1 - 1)//2
-                mid1Value = nums1[mid1]
+                else:
+                    mid1 = left1 + (len1 - 1)//2
+                    mid1Value = nums1[mid1]
 
-            if len2 % 2 == 0:
-                upperMid2 = len2//2
-                lowerMid2 = upperMid2 - 1
-                mid2Value = (nums2[lowerMid2] + nums2[upperMid2])/2
+                if len2 % 2 == 0:
+                    upperMid2 = left2 + len2//2
+                    lowerMid2 = upperMid2 - 1
+                    mid2Value = (nums2[lowerMid2] + nums2[upperMid2])/2
 
-            else:
-                mid2 = (len2 - 1)//2
-                mid2Value = nums2[mid2]
+                else:
+                    mid2 = left2 + (len2 - 1)//2
+                    mid2Value = nums2[mid2]
 
-            #compare two values and continue search
-            if mid1Value > mid2Value:
-                if len1 % 2 == 0 and len2 % 2 == 0: # E E
-                    right1 = lowerMid1
-                    left2 = upperMid2
+                print("midValue1:", mid1Value, "midValue2:", mid2Value)
 
-                elif len1 % 2 != 0 and len2 % 2 == 0: # O E
-                    right1 = mid1
-                    left2 = upperMid2
+                #compare two values and continue search
+                if mid1Value > mid2Value:
+                    if len1 % 2 == 0 and len2 % 2 == 0: # E E
+                        right1 = lowerMid1
+                        left2 = upperMid2
 
-                elif len1 % 2 == 0 and len2 % 2 != 0: # E O
-                    right1 = lowerMid1
-                    left2 = mid2
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
 
-                elif len1 % 2 != 0 and len2 % 2 != 0: # O O
-                    right1 = mid1
-                    left2 = mid2
+                    elif len1 % 2 != 0 and len2 % 2 == 0: # O E
+                        right1 = mid1
+                        left2 = upperMid2
 
-            if mid1Value < mid2Value:
-                if len1 % 2 == 0 and len2 % 2 == 0: # E E
-                    left1 = upperMid1
-                    right2 = lowerMid2
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
 
-                elif len1 % 2 != 0 and len2 % 2 == 0: # O E
-                    left1 = mid1
-                    right2 = lowerMid2
+                    elif len1 % 2 == 0 and len2 % 2 != 0: # E O
+                        right1 = lowerMid1
+                        left2 = mid2
 
-                elif len1 % 2 == 0 and len2 % 2 != 0: # E O
-                    left1 = upperMid1
-                    right2 = mid2
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
 
-                elif len1 % 2 != 0 and len2 % 2 != 0: # O O
-                    left1 = mid1
-                    right2 = mid2
+                    elif len1 % 2 != 0 and len2 % 2 != 0: # O O
+                        right1 = mid1
+                        left2 = mid2
 
-            else: #if we've found median early
-                return nums1[mid1]
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
+                    print("Right1:", right1, "Left2:", left2)
 
-        # now in base case of 1 + 2 or 2 + 1
-        if len1 == 1 and len2 == 2:
-            arr = [nums1[left1], nums2[left2], nums2[right2]]
-            arr = sorted(arr)
-            return arr[1]
-        else:
-            arr = [nums2[left2], nums1[left1], nums1[right1]]
-            arr = sorted(arr)
-            return arr[1]
+                if mid1Value < mid2Value:
+                    if len1 % 2 == 0 and len2 % 2 == 0: # E E
+                        left1 = upperMid1
+                        right2 = lowerMid2
+
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
+
+                    elif len1 % 2 != 0 and len2 % 2 == 0: # O E
+                        left1 = mid1
+                        right2 = lowerMid2
+
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
+
+                    elif len1 % 2 == 0 and len2 % 2 != 0: # E O
+                        left1 = upperMid1
+                        right2 = mid2
+
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
+
+                    elif len1 % 2 != 0 and len2 % 2 != 0: # O O
+                        left1 = mid1
+                        right2 = mid2
+
+                        len1 = right1 - left1 + 1
+                        len2 = right2 - left2 + 1
+                    print("Left1:", left1, "Right2:", right2)
+
+                else: #if we've found median early
+                    return mid1Value
+            # now in base cases: 1+1, 1+2, 2+1, 2+2
+            if len1 == 1 and len2 == 1:
+                return (nums1[left1] + nums2[left2])/2
+            elif len1 == 1 and len2 == 2:
+                arr = [nums1[left1], nums2[left2], nums2[right2]]
+                arr = sorted(arr)
+                return arr[1]
+            elif len1 == 2 and len2 == 1:
+                arr = [nums2[left2], nums1[left1], nums1[right1]]
+                arr = sorted(arr)
+                return arr[1]
+            elif len1 == 2 and len2 == 2:
+                arr = [nums2[left2], nums2[right2], nums1[left1], nums1[right1]]
+                arr = sorted(arr)
+                return (arr[1]+arr[2])/2
 
 
 
 
+
+
+
+            

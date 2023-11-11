@@ -16,11 +16,11 @@ class Solution:
                 elif element == "*":
                     numStack.append(b*a)
                 elif element == "/":
-                    if b/a > 0:
+                    if (b/a).is_integer():
                         numStack.append(b//a)
-                    elif b/a < 0:
-                        numStack.append(b//a +1)
                     else:
-                        numStack.append(0)
-
+                        if b/a > 0:
+                            numStack.append(b//a)
+                        else:
+                            numStack.append(b//a + 1)
         return numStack[0]

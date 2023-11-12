@@ -1,13 +1,13 @@
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        #preprocess of putting the max at the end
+        # preprocess of putting the max at the end
         n = len(nums)
         maxIndex = nums.index(max(nums))
         permuteBy = (n-1) - maxIndex
         nums = nums[-permuteBy:] + nums[:-permuteBy] # rotate right by permuteBy
 
-        #run MS on rotated array
-        res = [-1]*len(nums)
+        # run MS on rotated array
+        res = [-1] * len(nums)
         tempStack = []
 
         for i in range(0, n):

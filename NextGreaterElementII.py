@@ -12,7 +12,7 @@ class Solution:
 
         for i in range(0, n):
             while tempStack and nums[i] > tempStack[-1][0]:
-                res[tempStack[-1][1]] = nums[i]
+                res[tempStack[-1][1]] = nums[i] 
                 tempStack.pop()
             tempStack.append((nums[i], i))
 

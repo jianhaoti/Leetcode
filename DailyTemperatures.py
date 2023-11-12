@@ -10,12 +10,10 @@ class Solution:
         tempStack = []
 
         for i in range(0, n):
-            while tempStack and temperatures[i] > tempStack[-1][0]:
-                index = tempStack[-1][1]
-                res[index] = i - index
+            while tempStack and temperatures[i] > temperatures[tempStack[-1]]:
+                res[tempStack[-1]] = i - tempStack[-1]
                 tempStack.pop()
-            tempStack.append((temperatures[i],i))
-
+            tempStack.append(i)
 
         return res
 

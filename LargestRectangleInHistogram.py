@@ -1,33 +1,25 @@
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         n = len(heights)
-        maxArea = 0
+        areas = [0] * n
+        tempStack = []
 
-        boundaries = self.boundaries(heights) # length at lesat 2
-        m = len(boundaries)
-        for i in range(0, m-1, 2)
-            left = boundaries[i]
-            right = boundaries[i+1]
-            self.work(left )
+        for ind in range(0, n):
+            count = 0
+            while tempStack and heights[ind] < heights[tempStack[-1][0]]:
+                areas[tempStack[-1][0]] = (ind - tempStack[-1][0] + tempStack[-1][1]) * heights[tempStack[-1][0]]
+                tempStack.pop()
+                count +=1
+            tempStack.append((ind, count))
 
-        return 0
+        print(tempStack)
 
-    def work(self, ) -> int
-
-
-    def boundaries(self, nums) -> List[int]:
-        res = []
-        n = len(nums)
-        if nums[0]!=0:
-            res.append(0)
-
-        for i in range(1, n-1):
-            while nums[i] == 0 and nums[i-1]:
-
-
-        if nums[n-1]!=0:
-            res.append(n-1)
-
-        return res
-
-
+        #left with monotonically increasing tempStack - record their areas
+        for i in range(0, len(tempStack)):
+            ind = tempStack[i]
+            if i == 0:
+                areas[ind[0]] = n * heights[ind[0]] #smallest overall
+            else:
+                areas[ind[0]] = (n - ind[0]) * heights[ind[0]]
+        print(areas)
+        return max(areas)

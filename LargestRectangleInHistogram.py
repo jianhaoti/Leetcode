@@ -15,21 +15,21 @@ class Solution:
         print(tempStack)
 
         #left with monotonically increasing tempStack - record their areas
-        bound = self.findZeros(heights)
+        bound = self.findBoundaries(heights)
 
         left = 0
-        while left != len(bound) - 1
+        while left != len(bound) - 1:
             for i in range(bound[left], bound[left+1]):
                 ind = tempStack[i]
                 if i == 0:
-                    areas[ind[0]] = (bound[j+1]-bound[j]) * heights[ind[0]] # smallest overall in component
+                    areas[ind[0]] = (bound[left+1]-bound[left]) * heights[ind[0]] # smallest overall in component
                 else:
                     areas[ind[0]] = (n - ind[0]) * heights[ind[0]]
             left += 1
 
         return max(areas)
 
-    def findBoundaries(self, nums) -> List[int]
+    def findBoundaries(self, nums) -> List[int]:
         res = []
         n = len(nums)
         if nums[0]!= 0:

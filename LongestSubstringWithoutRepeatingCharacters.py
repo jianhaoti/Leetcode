@@ -7,9 +7,10 @@ class Solution:
         for i in range(0, n):
             if s[i] in myDict:
                 res = max(res, len(myDict))
-                myDict = {key:value for key,value in myDict.items() if key > s[i]}
+                myDict = {key:value for key,value in myDict.items() if value > myDict[s[i]]}
             myDict[s[i]] = i
 
         res = max(res,len(myDict))
 
         return res
+

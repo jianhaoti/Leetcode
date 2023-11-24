@@ -13,12 +13,16 @@ class Solution:
                 letter = starts.pop(0)
 
                 if n - i >= maxWindow: # if i can fit a window
-                    change = s[0,maxWindow].count(letter)
+                    occurences = s[0,maxWindow].count(letter)
                     nonOccurences = maxWindow - occurences
                     change = k -  nonOccurences
 
                     while change >= 0:
-                        if
+                        j = maxWindow + 1
+                        if s[i+j]!= letter:
+                            change -= 1
+                        j += 1
+                        maxWindow += 1
 
 
 

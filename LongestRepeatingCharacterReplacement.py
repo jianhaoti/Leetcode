@@ -22,7 +22,7 @@ class Solution:
                     nonOccurences = maxWindow - occurences
                     change = k -  nonOccurences
 
-                    j = maxWindow + 1
+                    j = maxWindow
                     while change >= 0 and i+j < n:
                         if s[i+j]!= letter:
                             change -= 1
